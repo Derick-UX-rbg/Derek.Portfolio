@@ -1,204 +1,519 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import {
+  Terminal,
+  Cpu,
+  Workflow,
+  Code2,
+  Database,
+  Mail,
+  Check,
+  Copy,
+  ExternalLink,
+  Github,
+  Twitter,
+  Menu,
+  X,
+  ArrowUpRight,
+  ShieldCheck,
+  ShoppingBag,
+  Building2,
+  Sparkles,
+  MapPin,
+  Bot,
+  Zap,
+  Layers,
+  ChevronRight
+} from 'lucide-react';
 
-type Project = {
-  id: string;
-  title: string;
-  status: string;
-  category: string;
-  summary: string;
-  tags: string[];
-  repository?: string;
-  notes: string[];
-};
+export default function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
-const projects: Project[] = [
-  {
-    id: 'property',
-    title: 'AI Property Sales & Lead Management',
-    status: 'In progress',
-    category: 'Workflow automation',
-    summary: 'An AI-assisted lead workflow for qualifying property enquiries, matching inventory, and handing qualified conversations to a human team.',
-    tags: ['n8n', 'LLM workflows', 'Google Calendar', 'Messaging APIs'],
-    repository: 'https://github.com/Derick-UX-rbg/RicoBuildsAI',
-    notes: ['Capture and classify an inbound enquiry', 'Extract preferences and route uncertain cases to a person', 'Prepare a follow-up and inspection handoff'],
-  },
-  {
-    id: 'boutique',
-    title: 'Boutique Sales & Fulfilment System',
-    status: 'Core pipeline',
-    category: 'Multi-agent AI',
-    summary: 'A focused-agent workflow for product questions, delivery context, and payment-review handoff in a busy commerce inbox.',
-    tags: ['n8n', 'Supabase', 'PostgreSQL', 'Tool calling'],
-    repository: 'https://github.com/Derick-UX-rbg/RicoBuildsAI',
-    notes: ['Route each request to a narrow specialist role', 'Persist useful order context safely', 'Keep payment and inventory changes behind human-approved tools'],
-  },
-  {
-    id: 'counterfeit',
-    title: 'Counterfeit Drink Detection Concept',
-    status: 'Research & testing',
-    category: 'Computer vision',
-    summary: 'A computer-vision concept for assessing bottle-label evidence and guiding consumers toward an appropriate official verification route.',
-    tags: ['TypeScript', 'OCR', 'Vision models', 'PostgreSQL'],
-    repository: 'https://github.com/Derick-UX-rbg/RicoBuildsAI',
-    notes: ['Read evidence from a supplied label image', 'Flag uncertainty instead of making a safety claim', 'Direct the user to official verification where available'],
-  },
-];
+  const email = "derekyigo128@gmail.com";
 
-const filters = ['All', ...new Set(projects.map((project) => project.category))];
-
-const bubbles = [
-  ['b1', '9%', '13%', '4.5rem', '19s', '0s'],
-  ['b2', '78%', '8%', '7rem', '25s', '-8s'],
-  ['b3', '89%', '55%', '3.4rem', '17s', '-4s'],
-  ['b4', '12%', '68%', '6rem', '23s', '-12s'],
-  ['b5', '53%', '78%', '3.2rem', '20s', '-6s'],
-  ['b6', '42%', '22%', '2.5rem', '15s', '-2s'],
-] as const;
-
-export default function Portfolio() {
-  const [filter, setFilter] = useState('All');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setSelectedProject(null);
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = selectedProject ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [selectedProject]);
-
-  const visibleProjects = filter === 'All' ? projects : projects.filter((project) => project.category === filter);
-  const closeMenu = () => setMenuOpen(false);
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2500);
+  };
 
   return (
-    <main id="top" className="portfolio-shell">
-      <style>{styles}</style>
-      <div className="bubble-field" aria-hidden="true">
-        {bubbles.map(([key, left, top, size, duration, delay]) => (
-          <span key={key} className="bubble" style={{ left, top, width: size, height: size, animationDuration: duration, animationDelay: delay }} />
-        ))}
-      </div>
+    <div className="min-h-screen bg-[#0a0e17] text-slate-200 font-sans selection:bg-cyan-500 selection:text-slate-950">
+      {/* Background Subtle Mesh Grid */}
+      <div className="fixed inset-0 bg-[linear-gradient(to_right,#1f293712_1px,transparent_1px),linear-gradient(to_bottom,#1f293712_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-0" />
 
-      <header className="site-header">
-        <a className="brand" href="#top" onClick={closeMenu} aria-label="Back to the top">DF <span>Derek Fwanten Yigo</span></a>
-        <button className="menu-button" type="button" aria-expanded={menuOpen} aria-controls="site-nav" onClick={() => setMenuOpen((value) => !value)}>{menuOpen ? 'Close' : 'Menu'}</button>
-        <nav id="site-nav" className={menuOpen ? 'site-nav open' : 'site-nav'} aria-label="Main navigation">
-          <a href="#work" onClick={closeMenu}>Work</a><a href="#now" onClick={closeMenu}>Now</a><a href="#about" onClick={closeMenu}>About</a><a href="#connect" onClick={closeMenu}>Connect</a>
-        </nav>
+      {/* Header & Navigation */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#0a0e17]/80 border-b border-slate-800/80">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <a href="#" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-mono font-bold text-sm group-hover:border-cyan-400 group-hover:bg-cyan-500/20 transition-all">
+              DFY
+            </div>
+            <span className="font-semibold text-slate-100 tracking-tight group-hover:text-cyan-400 transition-colors">
+              Derek Fwanten Yigo
+            </span>
+          </a>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+            <a href="#projects" className="hover:text-cyan-400 transition-colors">Projects</a>
+            <a href="#skills" className="hover:text-cyan-400 transition-colors">Skills & Tech</a>
+            <a href="#about" className="hover:text-cyan-400 transition-colors">About</a>
+            <a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a>
+          </nav>
+
+          {/* Action CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="#contact"
+              className="px-4 py-2 text-xs font-semibold rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-1.5"
+            >
+              Get In Touch
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 transition-colors"
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-b border-slate-800 bg-[#0d1322] px-4 pt-3 pb-6 space-y-3">
+            <a
+              href="#projects"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2 text-slate-300 hover:text-cyan-400 font-medium"
+            >
+              Projects
+            </a>
+            <a
+              href="#skills"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2 text-slate-300 hover:text-cyan-400 font-medium"
+            >
+              Skills & Tech
+            </a>
+            <a
+              href="#about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2 text-slate-300 hover:text-cyan-400 font-medium"
+            >
+              About
+            </a>
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2 text-slate-300 hover:text-cyan-400 font-medium"
+            >
+              Contact
+            </a>
+            <div className="pt-2 border-t border-slate-800">
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-2.5 text-center text-xs font-semibold rounded-lg bg-cyan-500 text-slate-950 block"
+              >
+                Get In Touch
+              </a>
+            </div>
+          </div>
+        )}
       </header>
 
-      <section className="hero section">
-        <p className="eyebrow"><span /> Based in Nigeria</p>
-        <h1>AI automation &amp; software, built for real problems.</h1>
-        <p className="lede">I’m Derek Fwanten Yigo. I build practical AI-powered systems, automations, and software experiments—and share what I learn along the way.</p>
-        <div className="actions"><a className="button primary" href="#work">View my work <span aria-hidden="true">→</span></a><a className="button" href="#connect">Let’s connect</a></div>
-      </section>
+      <main className="relative z-10">
+        {/* HERO SECTION */}
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-16">
+          <div className="max-w-3xl">
+            {/* Status Indicator */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono mb-6">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              Available for Freelance Automation & Engineering Roles
+            </div>
 
-      <section id="work" className="section">
-        <p className="eyebrow">Selected work</p><h2>Systems I’m building</h2>
-        <p className="section-intro">Practical AI, automation, and software projects—focused on useful workflows rather than inflated case studies.</p>
-        <div className="filter-row" aria-label="Filter projects">{filters.map((item) => <button type="button" key={item} className={filter === item ? 'filter active' : 'filter'} onClick={() => setFilter(item)}>{item}</button>)}</div>
-        <div className="project-grid">{visibleProjects.map((project) => <article className="project-card" key={project.id}>
-          <div><p className="status">{project.status}</p><p className="category">{project.category}</p><h3>{project.title}</h3><p>{project.summary}</p></div>
-          <div><ul className="tags" aria-label="Technology used">{project.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul><div className="card-actions"><button type="button" className="text-button" onClick={() => setSelectedProject(project)}>View approach <span aria-hidden="true">→</span></button>{project.repository && <a className="repo" href={project.repository} target="_blank" rel="noreferrer">Repository <span className="sr-only">(opens in a new tab)</span> ↗</a>}</div></div>
-        </article>)}</div>
-      </section>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-100 tracking-tight leading-[1.15] mb-6">
+              AI automation & software, <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">
+                built for real problems.
+              </span>
+            </h1>
 
-      <section id="now" className="section split"><div><p className="eyebrow">Right now</p><h2>Building, shipping, and learning in public.</h2></div><ul className="focus-list"><li><b>01</b> AI workflow orchestration and reliable handoffs</li><li><b>02</b> Agent systems with constrained tools and clear boundaries</li><li><b>03</b> Practical databases, APIs, and software foundations</li></ul></section>
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl">
+              I’m <strong className="text-slate-100">Derek Fwanten Yigo</strong>, an AI automation and software developer based in Nigeria. I specialize in designing n8n workflows, custom API integrations, and practical web software that eliminate manual operational bottlenecks.
+            </p>
 
-      <section id="about" className="section about"><p className="eyebrow">About</p><h2>Useful systems over flashy promises.</h2><p>I’m interested in the gap between an impressive AI demo and an actually useful product: the data, APIs, error handling, human handoffs, and product decisions that make automation dependable.</p></section>
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-4">
+              <a
+                href="#projects"
+                className="px-6 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-sm transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-2"
+              >
+                View Selected Work
+                <ChevronRight className="w-4 h-4" />
+              </a>
 
-      <section id="connect" className="section connect"><p className="eyebrow">Connect</p><h2>Let’s build, collaborate, or compare notes.</h2><p>For work, collaboration, or a conversation about AI, automation, and software:</p><div className="link-row"><a href="mailto:derekyigo128@gmail.com">Email me</a><a href="https://x.com/derekfwantenyigo" target="_blank" rel="noreferrer">X <span className="sr-only">(opens in a new tab)</span> ↗</a><a href="https://linkedin.com/in/derekfwantenyigo" target="_blank" rel="noreferrer">LinkedIn <span className="sr-only">(opens in a new tab)</span> ↗</a><a href="https://github.com/Derick-UX-rbg/RicoBuildsAI" target="_blank" rel="noreferrer">GitHub <span className="sr-only">(opens in a new tab)</span> ↗</a></div></section>
-      <footer>© {new Date().getFullYear()} Derek Fwanten Yigo</footer>
+              <button
+                onClick={handleCopyEmail}
+                className="px-5 py-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-slate-200 text-sm font-medium transition-all flex items-center gap-2"
+              >
+                {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-slate-400" />}
+                <span>{copiedEmail ? "Email Copied!" : "Copy Email"}</span>
+              </button>
+            </div>
 
-      {selectedProject && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedProject(null); }}><section className="modal" role="dialog" aria-modal="true" aria-labelledby="project-title"><button className="close" type="button" onClick={() => setSelectedProject(null)} aria-label="Close project details">×</button><p className="eyebrow">{selectedProject.category}</p><h2 id="project-title">{selectedProject.title}</h2><p>{selectedProject.summary}</p><h3>Approach</h3><ol>{selectedProject.notes.map((note) => <li key={note}>{note}</li>)}</ol>{selectedProject.repository && <a className="button primary" href={selectedProject.repository} target="_blank" rel="noreferrer">Open repository <span aria-hidden="true">↗</span></a>}</section></div>}
-    </main>
+            {/* Quick Metadata Badges */}
+            <div className="mt-12 pt-8 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs font-mono text-slate-400">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-cyan-400" />
+                <span>Based in Nigeria (Remote Ready)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Workflow className="w-4 h-4 text-cyan-400" />
+                <span>n8n & Webhook Architecture</span>
+              </div>
+              <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
+                <Code2 className="w-4 h-4 text-cyan-400" />
+                <span>React, Node & Python</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* PROJECTS SECTION */}
+        <section id="projects" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-slate-800/80">
+          <div className="mb-12">
+            <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-2">
+              <Layers className="w-4 h-4" />
+              Featured Engineering & Automation
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100">
+              Selected Projects & Systems
+            </h2>
+            <p className="text-slate-400 text-sm mt-1">
+              Focusing on measurable operational impact, clear architecture pipelines, and software reliability.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8">
+            {/* Project 1 */}
+            <div className="group relative rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all p-6 sm:p-8 backdrop-blur-sm">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-medium">
+                    Automation Workflow
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono">Real Estate & Sales</span>
+                </div>
+                <Building2 className="w-5 h-5 text-slate-500 group-hover:text-cyan-400 transition-colors" />
+              </div>
+
+              <h3 className="text-xl font-bold text-slate-100 mb-2">
+                AI Property Sales & Lead Management
+              </h3>
+
+              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                Replaces manual lead processing delays for real estate inquiries. Captures inbound web leads, evaluates lead intent and budget criteria using OpenAI API via n8n, and automatically dispatches prioritized buyer notifications to WhatsApp and sales CRM.
+              </p>
+
+              {/* Architecture Pipeline Layer */}
+              <div className="mb-6 p-4 rounded-xl bg-[#060911] border border-slate-800 font-mono text-xs text-slate-300">
+                <div className="text-slate-400 text-[11px] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-cyan-400" /> System Architecture Pipeline
+                </div>
+                <div className="flex flex-wrap items-center gap-2 text-slate-300">
+                  <span className="px-2 py-1 rounded bg-slate-800 text-cyan-300">Inbound Webhook</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-cyan-300">n8n Engine</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-cyan-300">OpenAI Intent Scoring</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-emerald-300">WhatsApp & CRM Alert</span>
+                </div>
+              </div>
+
+              {/* Tech Stack Badges */}
+              <div className="flex flex-wrap gap-2 text-xs font-mono">
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">n8n</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">OpenAI API</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">Webhooks</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">WhatsApp API</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">Supabase</span>
+              </div>
+            </div>
+
+            {/* Project 2 */}
+            <div className="group relative rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all p-6 sm:p-8 backdrop-blur-sm">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-md bg-teal-500/10 border border-teal-500/30 text-teal-400 text-xs font-mono font-medium">
+                    Production System
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono">Retail & Operations</span>
+                </div>
+                <ShoppingBag className="w-5 h-5 text-slate-500 group-hover:text-teal-400 transition-colors" />
+              </div>
+
+              <h3 className="text-xl font-bold text-slate-100 mb-2">
+                Boutique Sales & Fulfilment System
+              </h3>
+
+              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                Eliminates fragmented sales tracking and manual inventory counts for retail businesses. Provides a central web interface to manage stock, issue digital customer receipts, and trigger automated order dispatch notifications via integrated messaging APIs.
+              </p>
+
+              {/* Architecture Pipeline Layer */}
+              <div className="mb-6 p-4 rounded-xl bg-[#060911] border border-slate-800 font-mono text-xs text-slate-300">
+                <div className="text-slate-400 text-[11px] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-teal-400" /> System Architecture Pipeline
+                </div>
+                <div className="flex flex-wrap items-center gap-2 text-slate-300">
+                  <span className="px-2 py-1 rounded bg-slate-800 text-teal-300">Order Trigger</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-teal-300">Inventory DB Sync</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-teal-300">Receipt Generator</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-emerald-300">Telegram Admin Alert</span>
+                </div>
+              </div>
+
+              {/* Tech Stack Badges */}
+              <div className="flex flex-wrap gap-2 text-xs font-mono">
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">React</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">Node.js</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">PostgreSQL</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">Tailwind CSS</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">REST APIs</span>
+              </div>
+            </div>
+
+            {/* Project 3 */}
+            <div className="group relative rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all p-6 sm:p-8 backdrop-blur-sm">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-medium">
+                    Concept Architecture
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono">Product Security</span>
+                </div>
+                <ShieldCheck className="w-5 h-5 text-slate-500 group-hover:text-amber-400 transition-colors" />
+              </div>
+
+              <h3 className="text-xl font-bold text-slate-100 mb-2">
+                Counterfeit Drink Detection Concept
+              </h3>
+
+              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                An architectural concept designed to tackle product verification in retail supply chains. Combines unique serial scanning with computer vision/OCR modeling to verify product authenticity badges and protect consumers from counterfeit beverages.
+              </p>
+
+              {/* Architecture Pipeline Layer */}
+              <div className="mb-6 p-4 rounded-xl bg-[#060911] border border-slate-800 font-mono text-xs text-slate-300">
+                <div className="text-slate-400 text-[11px] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-amber-400" /> Proposed Pipeline Flow
+                </div>
+                <div className="flex flex-wrap items-center gap-2 text-slate-300">
+                  <span className="px-2 py-1 rounded bg-slate-800 text-amber-300">Serial / QR Scan</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-amber-300">Verification API</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-amber-300">OCR / Vision Check</span>
+                  <span className="text-slate-600">→</span>
+                  <span className="px-2 py-1 rounded bg-slate-800 text-emerald-300">Instant Status Screen</span>
+                </div>
+              </div>
+
+              {/* Tech Stack Badges */}
+              <div className="flex flex-wrap gap-2 text-xs font-mono">
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">Python</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">FastAPI</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">Computer Vision Concept</span>
+                <span className="px-2.5 py-1 rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/50">React</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SKILLS SECTION */}
+        <section id="skills" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-slate-800/80">
+          <div className="mb-12">
+            <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-2">
+              <Cpu className="w-4 h-4" />
+              Technical Capabilities
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100">
+              Skills & Stack Breakdown
+            </h2>
+            <p className="text-slate-400 text-sm mt-1">
+              Engineered around modern visual automation engines, API backends, and responsive web frontends.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Pillar 1 */}
+            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-5">
+                  <Workflow className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-100 mb-3">AI & Automation</h3>
+                <p className="text-xs text-slate-400 leading-relaxed mb-6">
+                  Building automated pipelines that connect external webhooks, LLM APIs, messaging platforms, and internal business logic.
+                </p>
+              </div>
+              <ul className="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800/80 pt-4">
+                <li className="flex items-center justify-between"><span>n8n Workflow Automation</span> <span className="text-cyan-400">Advanced</span></li>
+                <li className="flex items-center justify-between"><span>OpenAI API / Prompt Eng.</span> <span className="text-cyan-400">Proficient</span></li>
+                <li className="flex items-center justify-between"><span>Webhooks & Custom APIs</span> <span className="text-cyan-400">Advanced</span></li>
+                <li className="flex items-center justify-between"><span>Telegram & WhatsApp Bots</span> <span className="text-cyan-400">Proficient</span></li>
+                <li className="flex items-center justify-between"><span>Python Scripting</span> <span className="text-cyan-400">Core</span></li>
+              </ul>
+            </div>
+
+            {/* Pillar 2 */}
+            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 mb-5">
+                  <Code2 className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-100 mb-3">Full-Stack Software</h3>
+                <p className="text-xs text-slate-400 leading-relaxed mb-6">
+                  Developing clean, responsive, and accessible user interfaces paired with structured backend services.
+                </p>
+              </div>
+              <ul className="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800/80 pt-4">
+                <li className="flex items-center justify-between"><span>React & TypeScript</span> <span className="text-teal-400">Advanced</span></li>
+                <li className="flex items-center justify-between"><span>Vite & Modern Tooling</span> <span className="text-teal-400">Proficient</span></li>
+                <li className="flex items-center justify-between"><span>Tailwind CSS & Styling</span> <span className="text-teal-400">Advanced</span></li>
+                <li className="flex items-center justify-between"><span>Node.js & Express</span> <span className="text-teal-400">Proficient</span></li>
+                <li className="flex items-center justify-between"><span>Framer Motion / Lucide</span> <span className="text-teal-400">Proficient</span></li>
+              </ul>
+            </div>
+
+            {/* Pillar 3 */}
+            <div className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-5">
+                  <Database className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-100 mb-3">Data & Infrastructure</h3>
+                <p className="text-xs text-slate-400 leading-relaxed mb-6">
+                  Managing persistent datastores, environment configurations, versioning, and continuous delivery deployments.
+                </p>
+              </div>
+              <ul className="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800/80 pt-4">
+                <li className="flex items-center justify-between"><span>PostgreSQL & SQL</span> <span className="text-purple-400">Proficient</span></li>
+                <li className="flex items-center justify-between"><span>Supabase & Firebase</span> <span className="text-purple-400">Proficient</span></li>
+                <li className="flex items-center justify-between"><span>Git & GitHub Workflows</span> <span className="text-purple-400">Advanced</span></li>
+                <li className="flex items-center justify-between"><span>Render Cloud Hosting</span> <span className="text-purple-400">Proficient</span></li>
+                <li className="flex items-center justify-between"><span>Postman API Testing</span> <span className="text-purple-400">Proficient</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ABOUT SECTION */}
+        <section id="about" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-slate-800/80">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-2">
+              <Bot className="w-4 h-4" />
+              Background & Approach
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-6">
+              Engineering with Pragmatism & Authenticity
+            </h2>
+
+            <div className="space-y-4 text-slate-300 text-sm leading-relaxed">
+              <p>
+                I am an emerging software developer based in Nigeria, dedicated to bridging the gap between cutting-edge AI capability and practical everyday operations.
+              </p>
+              <p>
+                Rather than treating AI as a buzzword, I focus on building practical workflow pipelines—using tools like n8n, OpenAI APIs, custom Python scripts, and web interfaces—that solve real administrative, lead handling, and operational inefficiencies for businesses.
+              </p>
+              <p>
+                I am continuously expanding my experience across full-stack engineering and automated systems, committed to clean code, accessible UI standards, and transparent collaboration with teams worldwide.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* CONTACT SECTION */}
+        <section id="contact" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-slate-800/80">
+          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-slate-900 via-[#0d1322] to-slate-900 border border-slate-800 text-center max-w-3xl mx-auto shadow-2xl relative overflow-hidden">
+            <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mx-auto mb-6">
+              <Mail className="w-6 h-6" />
+            </div>
+
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 mb-3">
+              Let's Build Something Practical
+            </h2>
+
+            <p className="text-slate-300 text-sm max-w-lg mx-auto mb-8">
+              Whether you need an automated n8n workflow, an AI assistant integration, or a full-stack web application, feel free to reach out.
+            </p>
+
+            {/* Direct Email Action */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+              <a
+                href={`mailto:${email}`}
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
+              >
+                Send Email Directly
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+
+              <button
+                onClick={handleCopyEmail}
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-200 text-sm font-semibold transition-all flex items-center justify-center gap-2"
+              >
+                {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-slate-400" />}
+                <span>{copiedEmail ? "Copied to Clipboard!" : email}</span>
+              </button>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex items-center justify-center gap-6 pt-6 border-t border-slate-800/80 text-slate-400">
+              <a
+                href="https://github.com/Derick-UX-rbg"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 text-xs font-mono"
+              >
+                <Github className="w-4 h-4" />
+                GitHub
+              </a>
+              <a
+                href="https://x.com"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 text-xs font-mono"
+              >
+                <Twitter className="w-4 h-4" />
+                X (Twitter)
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* FOOTER */}
+      <footer className="border-t border-slate-800/80 py-8 bg-[#070a11]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+          <div>
+            © {new Date().getFullYear()} Derek Fwanten Yigo. All rights reserved.
+          </div>
+          <div>
+            Built with React, Vite, Tailwind CSS & Framer Motion
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
-
-const styles = `
-  :root { color-scheme: dark; --ink:#10181b; --paper:#edf0ea; --muted:#aec0bd; --amber:#df9545; --line:rgba(237,240,234,.18); }
-  :focus-visible { outline:3px solid #f6c27f; outline-offset:3px; }
-  * { box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { margin:0; background:var(--ink); }
-  button,a { font:inherit; }
-  button { cursor:pointer; }
-  a { color:inherit; }
-  .portfolio-shell { min-height:100vh; overflow:hidden; position:relative; background:radial-gradient(circle at 80% -10%,#274438 0,transparent 34rem),var(--ink); color:var(--paper); font-family:Inter,ui-sans-serif,system-ui,sans-serif; line-height:1.55; }
-  .bubble-field { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-  .bubble { position:absolute; border:1px solid rgba(223,149,69,.5); border-radius:50%; background:radial-gradient(circle at 31% 26%,rgba(255,255,255,.28),rgba(223,149,69,.1) 35%,rgba(16,24,27,.08) 70%); box-shadow:inset 0 0 18px rgba(255,255,255,.08),0 0 32px rgba(223,149,69,.12); animation:float ease-in-out infinite; }
-  @keyframes float { 50% { transform:translate3d(14px,-32px,0) scale(1.06); } }
-  .site-header,.section,footer { width:min(1120px,calc(100% - 2rem)); margin:auto; position:relative; z-index:1; }
-  .site-header { min-height:5rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
-  .brand { text-decoration:none; font-weight:750; letter-spacing:-.03em; display:flex; align-items:center; gap:.7rem; }
-  .brand::first-letter { color:var(--amber); }
-  .site-nav { display:flex; gap:1.5rem; font-size:.93rem; }
-  .site-nav a,.repo { text-decoration:none; color:var(--muted); }
-  .site-nav a:hover,.repo:hover { color:var(--paper); }
-  .menu-button { display:none; background:none; border:1px solid var(--line); color:var(--paper); border-radius:.45rem; padding:.4rem .7rem; }
-  .section { padding:6.5rem 0; border-bottom:1px solid var(--line); }
-  .hero { padding:8.5rem 0 9rem; max-width:1120px; }
-  .eyebrow,.status,.category { margin:0 0 1rem; color:var(--amber); font-size:.75rem; font-weight:750; letter-spacing:.11em; text-transform:uppercase; }
-  .eyebrow span { display:inline-block; width:.55rem; height:.55rem; margin-right:.45rem; border-radius:50%; background:#60c995; box-shadow:0 0 0 .25rem rgba(96,201,149,.15); }
-  h1,h2,h3,p { margin-top:0; }
-  h1,h2,h3 { line-height:1.03; letter-spacing:-.055em; }
-  h1 { max-width:900px; margin-bottom:1.5rem; font-size:clamp(3.2rem,9vw,7.6rem); }
-  h2 { font-size:clamp(2.25rem,5vw,4rem); max-width:700px; }
-  h3 { font-size:1.45rem; }
-  .lede { max-width:650px; color:var(--muted); font-size:clamp(1.05rem,2vw,1.25rem); }
-  .actions,.link-row,.card-actions { display:flex; flex-wrap:wrap; gap:.8rem; align-items:center; }
-  .actions { margin-top:2rem; }
-  .button { display:inline-flex; gap:.5rem; align-items:center; padding:.8rem 1.1rem; border:1px solid var(--line); border-radius:.5rem; color:var(--paper); text-decoration:none; font-weight:700; }
-  .button:hover { border-color:var(--amber); }
-  .button.primary { color:#171411; background:var(--amber); border-color:var(--amber); }
-  .section-intro,.about>p,.connect>p { max-width:640px; color:var(--muted); }
-  .filter-row { display:flex; flex-wrap:wrap; gap:.55rem; margin:2rem 0; }
-  .filter { border:1px solid var(--line); color:var(--muted); background:rgba(255,255,255,.03); border-radius:99px; padding:.48rem .76rem; font-size:.85rem; }
-  .filter:hover,.filter.active { color:#161411; border-color:var(--amber); background:var(--amber); }
-  .project-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
-  .project-card { min-height:370px; display:flex; flex-direction:column; justify-content:space-between; gap:2rem; padding:1.45rem; background:rgba(12,20,21,.76); border:1px solid var(--line); border-radius:.85rem; backdrop-filter:blur(10px); transition:transform .2s ease,border-color .2s ease; }
-  .project-card:hover { transform:translateY(-5px); border-color:rgba(223,149,69,.8); }
-  .category { color:var(--muted); letter-spacing:.07em; }
-  .project-card>div>p:not(.status):not(.category),.modal>p { color:var(--muted); }
-  .tags { list-style:none; display:flex; flex-wrap:wrap; padding:0; gap:.4rem; }
-  .tags li { color:#d8e2da; border:1px solid var(--line); border-radius:99px; padding:.23rem .55rem; font-size:.75rem; }
-  .text-button { padding:0; border:0; background:none; color:var(--amber); font-weight:750; }
-  .split { display:grid; grid-template-columns:1fr 1fr; gap:4rem; }
-  .focus-list { margin:0; padding:0; list-style:none; border-top:1px solid var(--line); }
-  .focus-list li { display:flex; gap:1rem; padding:1.1rem 0; border-bottom:1px solid var(--line); color:var(--muted); }
-  .focus-list b { color:var(--amber); }
-  .connect { padding-bottom:7rem; }
-  .link-row { margin-top:1.5rem; }
-  .link-row a { color:var(--paper); text-underline-offset:.25rem; }
-  footer { padding:1.5rem 0 3rem; color:var(--muted); font-size:.85rem; }
-  .modal-backdrop { position:fixed; z-index:5; inset:0; display:grid; place-items:center; padding:1rem; background:rgba(0,0,0,.65); backdrop-filter:blur(8px); }
-  .modal { width:min(620px,100%); position:relative; padding:2rem; background:#182325; border:1px solid var(--line); border-radius:1rem; box-shadow:0 1.5rem 5rem rgba(0,0,0,.45); }
-  .modal h3 { margin-top:2rem; font-size:1.2rem; }
-  .modal ol { padding-left:1.2rem; color:var(--muted); }
-  .modal li { margin-bottom:.6rem; }
-  .close { position:absolute; top:1rem; right:1rem; width:2rem; height:2rem; border:1px solid var(--line); border-radius:50%; background:transparent; color:var(--paper); font-size:1.35rem; line-height:1; }
-  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-  @media (max-width:800px) {
-    .site-nav { display:none; position:absolute; top:4.5rem; right:0; flex-direction:column; padding:1rem; background:#182325; border:1px solid var(--line); border-radius:.6rem; box-shadow:0 1rem 2rem rgba(0,0,0,.3); }
-    .site-nav.open { display:flex; }
-    .menu-button { display:block; }
-    .brand span { font-size:.85rem; }
-    .section { padding:4.5rem 0; }
-    .hero { padding:6rem 0 6.5rem; }
-    h1 { font-size:clamp(2.8rem,13vw,5rem); }
-    .project-grid,.split { grid-template-columns:1fr; gap:1rem; }
-    .project-card { min-height:0; }
-  }
-  @media (prefers-reduced-motion:reduce) {
-    html { scroll-behavior:auto; }
-    .bubble { animation:none; }
-    .project-card { transition:none; }
-  }
-`;
