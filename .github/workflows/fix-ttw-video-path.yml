@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'ai-tech-portfolio/src/App.tsx'
+      - '.github/workflows/fix-ttw-video-path.yml'
   workflow_dispatch:
 
 permissions:
