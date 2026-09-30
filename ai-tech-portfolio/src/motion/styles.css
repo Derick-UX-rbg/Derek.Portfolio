@@ -27,6 +27,7 @@ html.has-motion .nav.nav-scrolled {
 /* Contain clip-path reveals without overflow spam */
 html.has-motion .labcard,
 html.has-motion .card,
+html.has-motion .showcase-card,
 html.has-motion [data-reveal='media'] {
   will-change: transform, opacity, clip-path;
 }
@@ -42,6 +43,7 @@ html.has-motion .hero .copy {
   html.has-motion .is-magnetic,
   html.has-motion .labcard,
   html.has-motion .card,
+  html.has-motion .showcase-card,
   html.has-motion [data-reveal='media'] {
     will-change: auto !important;
     transform: none !important;
@@ -57,6 +59,7 @@ html.has-motion .hero .copy {
 html.motion-reduced .m-word,
 html.motion-reduced .labcard,
 html.motion-reduced .card,
+html.motion-reduced .showcase-card,
 html.motion-reduced .skill,
 html.motion-reduced .stackcard,
 html.motion-reduced .principle,
@@ -78,6 +81,7 @@ html.motion-mobile .is-magnetic {
 /* Failsafe: if a reveal never triggers, restore visibility after settle */
 html.has-motion.motion-settled .card,
 html.has-motion.motion-settled .labcard,
+html.has-motion.motion-settled .showcase-card,
 html.has-motion.motion-settled .skill,
 html.has-motion.motion-settled .stackcard,
 html.has-motion.motion-settled .principle,
