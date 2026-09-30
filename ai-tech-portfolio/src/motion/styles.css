@@ -96,5 +96,6 @@ html.has-motion.motion-settled .hero p,
 html.has-motion.motion-settled .hero .actions,
 html.has-motion.motion-settled .hero .stat,
 html.has-motion.motion-settled .hero .strip span {
-  /* Do not override mid-animation transforms; only unstick zero-opacity orphans via JS class timing */
+  /* Unstick zero-opacity orphans if a ScrollTrigger reveal never fired */
+  opacity: 1 !important;
 }

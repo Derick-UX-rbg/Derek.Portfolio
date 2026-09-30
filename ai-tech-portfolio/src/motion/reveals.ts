@@ -72,7 +72,8 @@ export function initReveals(profile: MotionProfile) {
 
   revealBatch('.card', profile, { y: 48, stagger: 0.12 });
   revealBatch('.labcard', profile, { y: 36, stagger: 0.1, clip: true });
-  revealBatch('.showcase-card', profile, { y: 36, stagger: 0.1, clip: true });
+  // Showcase media must stay visible on #lab land — no opacity:0 hide
+  // (ScrollTrigger batch was leaving cards invisible below the fold.)
   revealBatch('.skill', profile, { y: 32, stagger: 0.08 });
   revealBatch('.stackcard', profile, { y: 28, stagger: 0.06 });
   revealBatch('.principle', profile, { y: 24, stagger: 0.07 });
