@@ -154,6 +154,63 @@ const css = `:root{color-scheme:dark;font-family:'Plus Jakarta Sans',system-ui,s
 .systems-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:48px;padding:16px;border:1px solid rgba(103,232,249,.12);border-radius:16px;background:linear-gradient(145deg,rgba(15,23,36,.75),rgba(8,13,22,.7))}.systems-strip article{padding:10px 8px;border-right:1px solid rgba(148,163,184,.1)}.systems-strip article:last-child{border-right:none}.systems-strip b{display:block;color:#d8e3ef;font-size:12px;margin-bottom:4px}.systems-strip span{color:#6b7a8f;font:500 10px 'JetBrains Mono',monospace}.showcase-caption{margin-top:10px;color:#8492a5;font-size:12px;line-height:1.55}.case-toggle{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:8px 0;border:0;background:transparent;color:#67e8f9;font-size:12px;font-weight:800;cursor:pointer}.case-toggle svg{transition:transform .2s ease}.case-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}.case-panel{margin-top:14px;padding:14px;border:1px solid #1a2637;border-radius:12px;background:#060a11}.case-panel h4{margin:0 0 6px;color:#67e8f9;font:700 10px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}.case-panel p,.case-panel li{color:#9aa9bc;font-size:12px;line-height:1.65;margin:0 0 12px}.case-panel ul{margin:0 0 12px;padding-left:18px}.case-panel li{margin-bottom:4px}.nowgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}.nowcard{padding:20px;border:1px solid #1b2737;border-radius:14px;background:#0a111c}.nowcard .eyebrow{margin-bottom:10px}.nowcard p{margin:0;color:#9aa9bc;font-size:13px;line-height:1.7}.services{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}.service{padding:14px;border:1px solid #1a2637;border-radius:12px;background:#080d16}.service b{display:block;color:#d8e3ef;font-size:12px;margin-bottom:6px}.service span{color:#7f8da1;font-size:11px;line-height:1.55}.email-hint{margin-top:16px;color:#6b7a8f;font:500 11px 'JetBrains Mono',monospace}.email-hint a{color:#67e8f9;text-decoration:underline;text-underline-offset:3px}.skip-link:focus-visible,.brand:focus-visible,.links a:focus-visible,.cta:focus-visible,.primary:focus-visible,.secondary:focus-visible,.social:focus-visible,.menub:focus-visible,.case-toggle:focus-visible,.footlinks a:focus-visible,.mobile a:focus-visible{outline:2px solid #67e8f9;outline-offset:3px;border-radius:8px}
 @media(max-width:900px){.skillgrid,.stackgrid,.services,.systems-strip,.nowgrid{grid-template-columns:1fr 1fr}.pipeline{grid-template-columns:repeat(3,1fr)}.systems-strip article{border-right:none}}@media(max-width:820px){.links,.cta{display:none}.menub{display:block}.mobile.open{display:block}.mobile a{display:block;padding:11px 0;color:#9aa9bc;font-size:13px;font-weight:700}.hero{padding:72px 0 64px}.stats{grid-template-columns:1fr}.section{padding:68px 0}.head{display:block}.intro{margin-top:14px}.labgrid{grid-template-columns:1fr}.showcase-card.featured{grid-template-columns:1fr}.showcase-grid{grid-template-columns:1fr}.about{grid-template-columns:1fr;gap:35px}}@media(max-width:560px){.container{width:min(100% - 28px,1120px)}h1{font-size:43px}.card{padding:21px}.top{display:block}.num{margin-top:10px}.skillgrid,.stackgrid,.services,.systems-strip,.nowgrid{grid-template-columns:1fr}.showcase-grid{grid-template-columns:1fr}.pipeline{grid-template-columns:1fr 1fr}.contact{padding:27px 21px}.footerin{align-items:flex-start;flex-direction:column}.status{position:static;margin-top:10px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card:hover,.labcard:hover,.showcase-card:hover,.cta:hover,.primary:hover{transform:none;box-shadow:none}.showcase-media video{transform:none!important}.case-toggle svg{transition:none}}`;
 
+/** One-at-a-time muted autoplay for showcase videos (most centered / visible). */
+type ShowcaseVisibility = { ratio: number; centerDist: number };
+const showcaseVisible = new Map<HTMLVideoElement, ShowcaseVisibility>();
+let showcasePrimary: HTMLVideoElement | null = null;
+
+function prefersReducedMotion(): boolean {
+  return typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function pickShowcasePrimary() {
+  if (prefersReducedMotion()) {
+    if (showcasePrimary) {
+      showcasePrimary.pause();
+      showcasePrimary = null;
+    }
+    return;
+  }
+
+  let best: HTMLVideoElement | null = null;
+  let bestScore = -Infinity;
+  for (const [el, meta] of showcaseVisible) {
+    // Higher visible ratio wins; ties break toward viewport center.
+    const score = meta.ratio * 10000 - meta.centerDist;
+    if (score > bestScore) {
+      bestScore = score;
+      best = el;
+    }
+  }
+
+  if (showcasePrimary && showcasePrimary !== best) {
+    showcasePrimary.pause();
+  }
+  showcasePrimary = best;
+  if (best?.src) {
+    void best.play().catch(() => {});
+  }
+}
+
+function updateShowcaseVisibility(el: HTMLVideoElement, entry: IntersectionObserverEntry) {
+  const vh = window.innerHeight || 1;
+  const rect = entry.boundingClientRect;
+  const centerDist = Math.abs(rect.top + rect.height / 2 - vh / 2);
+  const enough = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+
+  if (enough) {
+    showcaseVisible.set(el, { ratio: entry.intersectionRatio, centerDist });
+  } else {
+    showcaseVisible.delete(el);
+    if (showcasePrimary === el) {
+      el.pause();
+      showcasePrimary = null;
+    }
+  }
+  pickShowcasePrimary();
+}
+
 function LazyShowcaseVideo({
   src,
   poster,
@@ -167,25 +224,85 @@ function LazyShowcaseVideo({
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [activeSrc, setActiveSrc] = useState<string | undefined>(undefined);
+  const reduceMotionRef = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(
+
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    reduceMotionRef.current = mq.matches;
+    const onMotionPref = () => {
+      reduceMotionRef.current = mq.matches;
+      if (mq.matches) {
+        showcaseVisible.delete(el);
+        if (showcasePrimary === el) {
+          el.pause();
+          showcasePrimary = null;
+        }
+        pickShowcasePrimary();
+      } else {
+        // Re-evaluate after preference flips off (visibility IO will refresh on scroll).
+        pickShowcasePrimary();
+      }
+    };
+    mq.addEventListener('change', onMotionPref);
+
+    // Lazy-load near viewport; keep preload=none until then.
+    const loadIo = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             setActiveSrc(src);
-            io.disconnect();
+            loadIo.disconnect();
             break;
           }
         }
       },
       { rootMargin: '280px 0px' }
     );
-    io.observe(el);
-    return () => io.disconnect();
+    loadIo.observe(el);
+
+    // Play/pause when ~50%+ visible; one primary at a time.
+    const playIo = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (reduceMotionRef.current) {
+            showcaseVisible.delete(el);
+            if (showcasePrimary === el) {
+              el.pause();
+              showcasePrimary = null;
+            }
+            continue;
+          }
+          updateShowcaseVisibility(el, entry);
+        }
+      },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    playIo.observe(el);
+
+    return () => {
+      mq.removeEventListener('change', onMotionPref);
+      loadIo.disconnect();
+      playIo.disconnect();
+      showcaseVisible.delete(el);
+      if (showcasePrimary === el) {
+        el.pause();
+        showcasePrimary = null;
+      }
+      pickShowcasePrimary();
+    };
   }, [src]);
+
+  // Once src is hydrated and this video is primary, start muted playback.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !activeSrc || reduceMotionRef.current) return;
+    if (showcasePrimary === el || showcaseVisible.has(el)) {
+      pickShowcasePrimary();
+    }
+  }, [activeSrc]);
 
   return (
     <>
