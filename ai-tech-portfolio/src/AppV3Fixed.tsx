@@ -5,7 +5,7 @@ import './theme/theme.css';
 import { ThemeToggle } from './theme/ThemeToggle';
 import {
   ArrowUpRight, Bot, Check, ChevronDown, ChevronRight, Code2, Copy, Database,
-  Github, Mail, Menu, Play, Sparkles, Workflow, X, Cpu, Layers3
+  Github, Linkedin, Mail, Menu, MessageCircle, Play, Sparkles, Workflow, X, Cpu, Layers3
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -30,6 +30,8 @@ type Showcase = {
 };
 
 const EMAIL = 'derekyigo128@gmail.com';
+const LINKEDIN = 'https://www.linkedin.com/in/derek-yigo-511b1141a';
+const WHATSAPP = 'https://wa.me/qr/NRZPCSEFHYCLN1';
 const MAILTO =
   `mailto:${EMAIL}?subject=${encodeURIComponent('Project enquiry — Derek Portfolio')}&body=${encodeURIComponent(
     "Hi Derek,\n\nI have a project / process I'd like to discuss:\n\n- What I need help with:\n- Timeline:\n- Budget range (optional):\n\nThanks,"
@@ -535,6 +537,12 @@ export default function AppV3Fixed() {
                   {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
                   {copied ? 'Email copied' : 'Copy email'}
                 </button>
+                <a className="social" href={WHATSAPP} target="_blank" rel="noreferrer" aria-label="WhatsApp — Rico_Vrse">
+                  <MessageCircle size={15} aria-hidden="true" /> WhatsApp
+                </a>
+                <a className="social" href={LINKEDIN} target="_blank" rel="noreferrer">
+                  <Linkedin size={15} aria-hidden="true" /> LinkedIn
+                </a>
                 <a className="social" href="https://github.com/Derick-UX-rbg" target="_blank" rel="noreferrer">
                   <Github size={15} aria-hidden="true" /> GitHub
                 </a>
