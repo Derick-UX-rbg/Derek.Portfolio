@@ -8,7 +8,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 
 type System = { num: string; eyebrow: string; title: string; text: string; flow: string[]; tags: string[] };
-type Lab = { icon: LucideIcon; type: string; title: string; text: string; tools: string[]; status: string };
+type Lab = { icon: LucideIcon; type: string; title: string; text: string; tools: string[]; status: string; href?: string; cta?: string };
 type Skill = { icon: LucideIcon; title: string; text: string };
 type Showcase = {
   id: string;
@@ -40,7 +40,7 @@ const systems: System[] = [
 
 const lab: Lab[] = [
   { icon: Play, type: 'AI VIDEO', title: 'AI Short Film Lab', text: 'Cinematic storytelling experiments combining scene design, motion, voice and editing workflows.', tools: ['Higgsfield', 'Gemini', 'Generative video'], status: 'EXPERIMENT' },
-  { icon: Sparkles, type: 'AI ADVERTISING', title: 'AI Product Commercials', text: 'Product-focused creative concepts that move from an idea and script into visual assets and short-form ads.', tools: ['Higgsfield', 'Image models', 'Creative direction'], status: 'BUILDING' },
+  { icon: Sparkles, type: 'AI ADVERTISING', title: 'AI Product Commercials', text: 'Product-focused creative concepts that move from an idea and script into visual assets and short-form ads.', tools: ['Higgsfield', 'Image models', 'Creative direction'], status: 'LIVE', href: 'https://ai-commercial-factory.onrender.com', cta: 'Open live product' },
   { icon: Layers3, type: 'CREATIVE AUTOMATION', title: 'Social Content Engine', text: 'A concept for turning one content idea into scripts, visual prompts, media assets and platform-ready variations.', tools: ['Gemini', 'n8n', 'AI media tools'], status: 'CONCEPT' },
   { icon: Cpu, type: 'AI AGENTS', title: 'Automation Architect', text: 'An AI-assisted system for understanding business problems, designing workflows, mapping APIs and debugging n8n automations.', tools: ['AI agents', 'n8n', 'APIs'], status: 'BUILDING' }
 ];
@@ -374,6 +374,11 @@ export default function AppV3Fixed() {
                     <h3>{l.title}</h3>
                     <p>{l.text}</p>
                     <div className="metas">{l.tools.map((x) => <span className="meta" key={x}>{x}</span>)}</div>
+                    {l.href ? (
+                      <a className="link" href={l.href} target="_blank" rel="noopener noreferrer">
+                        {l.cta ?? 'Open live product'} <ArrowUpRight size={14} aria-hidden="true" />
+                      </a>
+                    ) : null}
                   </article>
                 );
               })}
