@@ -138,3 +138,48 @@ html.has-motion.motion-settled .is-magnetic {
   transform: none !important;
   clip-path: none !important;
 }
+
+/* Case-study expand — grid rows (no opacity:0 on showcase card) */
+html.has-motion .case-panel-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.48s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+html.has-motion .case-panel-wrap.is-open {
+  grid-template-rows: 1fr;
+}
+html.has-motion .case-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+html.has-motion .case-panel-wrap .case-panel {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.36s ease, transform 0.36s ease;
+}
+html.has-motion .case-panel-wrap.is-open .case-panel {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.has-motion .case-panel-wrap {
+    transition: none;
+  }
+  html.has-motion .case-panel-wrap .case-panel {
+    transition: none;
+  }
+  html.has-motion .case-panel-wrap.is-open .case-panel {
+    opacity: 1;
+    transform: none;
+  }
+  html.has-motion .case-panel-wrap:not(.is-open) .case-panel {
+    opacity: 0;
+  }
+}
+
+/* Micro: ensure press scale doesn't leave sticky transforms */
+html.has-motion .cta,
+html.has-motion .primary {
+  transform-origin: center center;
+}

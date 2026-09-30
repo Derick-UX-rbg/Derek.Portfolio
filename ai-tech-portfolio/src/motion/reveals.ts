@@ -42,7 +42,7 @@ function headingReveals(profile: MotionProfile) {
   heads.forEach((h2) => {
     const words = splitWords(h2);
     if (!words.length) return;
-    gsap.set(words, { opacity: 0, y: 32 * profile.strength });
+    gsap.set(words, { opacity: 0, y: 36 * profile.strength, rotateX: -8 * profile.strength });
     ScrollTrigger.create({
       trigger: h2,
       start: 'top 88%',
@@ -51,8 +51,9 @@ function headingReveals(profile: MotionProfile) {
         gsap.to(words, {
           opacity: 1,
           y: 0,
-          duration: DUR.reveal * 1.05,
-          stagger: 0.04 * profile.strength,
+          rotateX: 0,
+          duration: DUR.reveal * 1.08,
+          stagger: 0.045 * profile.strength,
           ease: EASE_EXPO,
         });
       },
@@ -69,9 +70,10 @@ function imageReveals(profile: MotionProfile) {
 
   const media = gsap.utils.toArray<HTMLElement>('[data-reveal="media"], .showcase-media');
   media.forEach((el) => {
+    // Cinematic bottom wipe — transform/clip only, never opacity:0 on showcase media
     gsap.set(el, {
-      clipPath: 'inset(12% 0 12% 0)',
-      scale: 1.035,
+      clipPath: 'inset(18% 0 0% 0)',
+      scale: 1.045,
     });
     ScrollTrigger.create({
       trigger: el,
@@ -81,8 +83,8 @@ function imageReveals(profile: MotionProfile) {
         gsap.to(el, {
           scale: 1,
           clipPath: 'inset(0% 0 0% 0)',
-          duration: DUR.reveal * 1.15,
-          ease: EASE,
+          duration: DUR.reveal * 1.22,
+          ease: EASE_EXPO,
         });
       },
     });
@@ -96,8 +98,8 @@ export function initReveals(profile: MotionProfile) {
   revealBatch('.section .intro', profile, { y: 26, stagger: 0 });
   headingReveals(profile);
 
-  revealBatch('.card', profile, { y: 52, stagger: 0.13 });
-  revealBatch('.labcard', profile, { y: 40, stagger: 0.11, clip: true });
+  revealBatch('.card', profile, { y: 56, stagger: 0.14 });
+  revealBatch('.labcard', profile, { y: 44, stagger: 0.12, clip: true });
   // Showcase cards stay layout-visible; media gets soft clip polish only.
   revealBatch('.skill', profile, { y: 34, stagger: 0.08 });
   revealBatch('.stackcard', profile, { y: 28, stagger: 0.06 });

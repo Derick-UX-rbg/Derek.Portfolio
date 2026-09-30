@@ -9,6 +9,7 @@ import { initParallax } from './parallax';
 import { initMagnetic } from './magnetic';
 import { initNav } from './nav';
 import { initHoverReveals } from './hoverReveals';
+import { initMicro } from './micro';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,6 +37,7 @@ export function initMotion(root?: HTMLElement | null): MotionHandle {
   initParallax(profile);
   cleanups.push(initMagnetic(profile));
   cleanups.push(initHoverReveals(profile));
+  cleanups.push(initMicro(profile));
   cleanups.push(initNav(profile, smooth.lenis));
 
   // Refresh after fonts/layout settle

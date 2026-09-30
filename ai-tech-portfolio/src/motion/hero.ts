@@ -27,8 +27,8 @@ export function initHero(profile: MotionProfile): gsap.core.Timeline | null {
   if (words.length) {
     gsap.set(words, {
       opacity: 0,
-      y: 48 * profile.strength,
-      rotateX: -10 * profile.strength,
+      y: 52 * profile.strength,
+      rotateX: -12 * profile.strength,
     });
   }
 
@@ -43,7 +43,7 @@ export function initHero(profile: MotionProfile): gsap.core.Timeline | null {
         y: 0,
         rotateX: 0,
         duration: DUR.hero,
-        stagger: DUR.stagger * 0.9 * profile.strength,
+        stagger: DUR.stagger * 0.95 * profile.strength,
         ease: EASE_EXPO,
       },
       0.14,

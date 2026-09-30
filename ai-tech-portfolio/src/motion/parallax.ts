@@ -65,4 +65,20 @@ export function initParallax(profile: MotionProfile) {
       },
     });
   });
+
+  // Soft section-head drift (desktop) — restrained
+  if (!profile.mobile) {
+    gsap.utils.toArray<HTMLElement>('.section .head').forEach((head) => {
+      gsap.to(head, {
+        y: 18 * profile.parallax,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: head.closest('.section') || head,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    });
+  }
 }

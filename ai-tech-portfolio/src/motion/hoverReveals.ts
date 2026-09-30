@@ -18,17 +18,17 @@ export function initHoverReveals(profile: MotionProfile): Cleanup {
     const link = card.querySelector('.link');
 
     const onEnter = () => {
-      if (flow) gsap.to(flow, { y: -3, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
+      if (flow) gsap.to(flow, { y: -4, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
       if (tags.length) {
         gsap.to(tags, {
-          y: -3,
-          stagger: 0.03,
+          y: -4,
+          stagger: 0.028,
           duration: DUR.hover,
           ease: EASE_SOFT,
           overwrite: 'auto',
         });
       }
-      if (link) gsap.to(link, { x: 5, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
+      if (link) gsap.to(link, { x: 7, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
     };
     const onLeave = () => {
       gsap.to([flow, ...Array.from(tags), link].filter(Boolean), {
@@ -74,9 +74,9 @@ export function initHoverReveals(profile: MotionProfile): Cleanup {
     const bodyH = card.querySelector('.showcase-body h3');
     // Avoid fighting scrub parallax on video scale — polish chrome only
     const onEnter = () => {
-      if (media) gsap.to(media, { y: -3, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
-      if (badge) gsap.to(badge, { scale: 1.06, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
-      if (bodyH) gsap.to(bodyH, { x: 3, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
+      if (media) gsap.to(media, { y: -4, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
+      if (badge) gsap.to(badge, { scale: 1.08, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
+      if (bodyH) gsap.to(bodyH, { x: 4, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
     };
     const onLeave = () => {
       if (media) gsap.to(media, { y: 0, duration: DUR.hover, ease: EASE_SOFT, overwrite: 'auto' });
