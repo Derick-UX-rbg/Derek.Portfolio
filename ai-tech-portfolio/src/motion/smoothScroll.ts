@@ -13,12 +13,13 @@ export function initSmoothScroll(profile: MotionProfile): SmoothScrollHandle {
     return { lenis: null, destroy: () => undefined };
   }
 
+  // Buttery agency scroll — slightly longer, softer ease
   const lenis = new Lenis({
-    duration: 1.15,
+    duration: 1.35,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
-    touchMultiplier: 1.4,
-    wheelMultiplier: 0.95,
+    touchMultiplier: 1.2,
+    wheelMultiplier: 0.88,
     autoRaf: false,
   });
 
@@ -31,7 +32,6 @@ export function initSmoothScroll(profile: MotionProfile): SmoothScrollHandle {
   gsap.ticker.lagSmoothing(0);
 
   document.documentElement.classList.add('has-smooth-scroll');
-  // Prefer Lenis over CSS smooth scroll to avoid double-smoothing.
   document.documentElement.style.scrollBehavior = 'auto';
 
   return {
@@ -50,7 +50,7 @@ export function scrollToHash(lenis: Lenis | null, hash: string) {
   const target = document.getElementById(id) || document.querySelector(hash);
   if (!target) return;
   if (lenis) {
-    lenis.scrollTo(target as HTMLElement, { offset: -72, duration: 1.2 });
+    lenis.scrollTo(target as HTMLElement, { offset: -80, duration: 1.35 });
   } else {
     (target as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

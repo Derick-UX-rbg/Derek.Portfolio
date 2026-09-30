@@ -4,7 +4,7 @@ import { DUR, EASE_SOFT, type MotionProfile } from './config';
 type Cleanup = () => void;
 
 function bindMagnetic(el: HTMLElement, strength: number): Cleanup {
-  const max = 12 * strength;
+  const max = 16 * strength;
   let hovering = false;
 
   const onMove = (e: PointerEvent) => {
@@ -13,8 +13,8 @@ function bindMagnetic(el: HTMLElement, strength: number): Cleanup {
     const x = e.clientX - (rect.left + rect.width / 2);
     const y = e.clientY - (rect.top + rect.height / 2);
     gsap.to(el, {
-      x: gsap.utils.clamp(-max, max, x * 0.25),
-      y: gsap.utils.clamp(-max, max, y * 0.25),
+      x: gsap.utils.clamp(-max, max, x * 0.28),
+      y: gsap.utils.clamp(-max, max, y * 0.28),
       duration: DUR.magnetic,
       ease: EASE_SOFT,
       overwrite: 'auto',

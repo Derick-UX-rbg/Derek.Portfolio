@@ -1,12 +1,81 @@
-/* Motion system helpers — no brand/layout redesign. */
+/* Motion + cursor — Rejouice-inspired agency polish */
 
 html.has-smooth-scroll {
   scroll-behavior: auto;
 }
 
+html.has-cursor,
+html.has-cursor body {
+  cursor: none;
+}
+
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor .cta,
+html.has-cursor .primary,
+html.has-cursor .secondary,
+html.has-cursor .social,
+html.has-cursor .menub,
+html.has-cursor .case-toggle {
+  cursor: none;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: difference;
+}
+
+.cursor-ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: #efeae2;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.cursor.has-label .cursor-ball {
+  background: transparent;
+  border: 1px solid #efeae2;
+}
+
+.cursor-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  font: 600 10px/1 'Inter', system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #efeae2;
+  opacity: 0;
+  white-space: nowrap;
+}
+
+.cursor.has-label .cursor-label {
+  opacity: 1;
+}
+
 html.has-motion .m-word {
   display: inline-block;
   will-change: transform, opacity;
+}
+
+html.has-motion .m-line {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
 }
 
 html.has-motion .is-magnetic {
@@ -15,35 +84,55 @@ html.has-motion .is-magnetic {
 }
 
 html.has-motion .nav {
-  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
 }
 
 html.has-motion .nav.nav-scrolled {
-  background: rgba(5, 8, 16, 0.92);
-  border-bottom-color: rgba(103, 232, 249, 0.16);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
+  background: rgba(10, 10, 10, 0.88);
+  border-bottom-color: rgba(239, 234, 226, 0.1);
+  backdrop-filter: blur(20px);
 }
 
-/* Contain clip-path reveals without overflow spam */
 html.has-motion .labcard,
 html.has-motion .card,
 html.has-motion .showcase-card,
+html.has-motion .showcase-media,
 html.has-motion [data-reveal='media'] {
   will-change: transform, opacity, clip-path;
 }
 
 html.has-motion .hero .copy {
   transform-style: preserve-3d;
-  perspective: 800px;
+  perspective: 900px;
 }
 
-/* Reduced motion: kill motion helpers, keep UI fully visible */
+html.has-motion .showcase-media {
+  overflow: hidden;
+}
+
+html.has-motion .showcase-media video {
+  transform-origin: center center;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html.has-cursor,
+  html.has-cursor body,
+  html.has-cursor a,
+  html.has-cursor button {
+    cursor: auto;
+  }
+
+  .cursor {
+    display: none !important;
+  }
+
   html.has-motion .m-word,
   html.has-motion .is-magnetic,
   html.has-motion .labcard,
   html.has-motion .card,
   html.has-motion .showcase-card,
+  html.has-motion .showcase-media,
   html.has-motion [data-reveal='media'] {
     will-change: auto !important;
     transform: none !important;
@@ -60,42 +149,68 @@ html.motion-reduced .m-word,
 html.motion-reduced .labcard,
 html.motion-reduced .card,
 html.motion-reduced .showcase-card,
+html.motion-reduced .showcase-media,
 html.motion-reduced .skill,
 html.motion-reduced .stackcard,
 html.motion-reduced .principle,
+html.motion-reduced .nowcard,
+html.motion-reduced .service,
 html.motion-reduced .contact,
 html.motion-reduced .pipeline .step,
 html.motion-reduced .section .head,
 html.motion-reduced .section .intro,
-html.motion-reduced .section .label {
+html.motion-reduced .section .label,
+html.motion-reduced .section h2 .m-word,
+html.motion-reduced .about > div:first-child,
+html.motion-reduced .hero .kicker,
+html.motion-reduced .hero h1,
+html.motion-reduced .hero p,
+html.motion-reduced .hero .actions,
+html.motion-reduced .hero .stat,
+html.motion-reduced .hero .strip span,
+html.motion-reduced .hero .systems-strip {
   opacity: 1 !important;
   transform: none !important;
   clip-path: none !important;
 }
 
-/* Mobile: lighter — no magnetic, softer will-change */
 html.motion-mobile .is-magnetic {
   will-change: auto;
 }
 
-/* Failsafe: if a reveal never triggers, restore visibility after settle */
+html.motion-mobile .cursor {
+  display: none !important;
+}
+
+html.motion-mobile,
+html.motion-mobile body {
+  cursor: auto !important;
+}
+
+/* Failsafe: restore visibility after settle */
 html.has-motion.motion-settled .card,
 html.has-motion.motion-settled .labcard,
 html.has-motion.motion-settled .showcase-card,
+html.has-motion.motion-settled .showcase-media,
 html.has-motion.motion-settled .skill,
 html.has-motion.motion-settled .stackcard,
 html.has-motion.motion-settled .principle,
+html.has-motion.motion-settled .nowcard,
+html.has-motion.motion-settled .service,
 html.has-motion.motion-settled .contact,
 html.has-motion.motion-settled .pipeline .step,
 html.has-motion.motion-settled .section .head,
 html.has-motion.motion-settled .section .intro,
+html.has-motion.motion-settled .section .label,
+html.has-motion.motion-settled .section h2 .m-word,
 html.has-motion.motion-settled .about > div:first-child,
 html.has-motion.motion-settled .hero .kicker,
 html.has-motion.motion-settled .hero h1,
+html.has-motion.motion-settled .hero h1 .m-word,
 html.has-motion.motion-settled .hero p,
 html.has-motion.motion-settled .hero .actions,
 html.has-motion.motion-settled .hero .stat,
-html.has-motion.motion-settled .hero .strip span {
-  /* Unstick zero-opacity orphans if a ScrollTrigger reveal never fired */
+html.has-motion.motion-settled .hero .strip span,
+html.has-motion.motion-settled .hero .systems-strip {
   opacity: 1 !important;
 }

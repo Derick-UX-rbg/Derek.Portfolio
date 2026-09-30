@@ -12,11 +12,11 @@ export function initNav(profile: MotionProfile, lenis: Lenis | null): () => void
 
   if (!profile.reduced) {
     gsap.from(nav, {
-      y: -24 * profile.strength,
+      y: -28 * profile.strength,
       opacity: 0,
       duration: DUR.nav,
       ease: EASE,
-      delay: 0.05,
+      delay: 0.04,
     });
 
     ScrollTrigger.create({
@@ -26,22 +26,8 @@ export function initNav(profile: MotionProfile, lenis: Lenis | null): () => void
         nav.classList.toggle('nav-scrolled', scrolled);
       },
     });
-
-    // Soft underline / color polish on nav links
-    nav.querySelectorAll<HTMLElement>('.links a').forEach((a) => {
-      const onEnter = () => gsap.to(a, { color: '#67e8f9', duration: 0.25, overwrite: 'auto' });
-      const onLeave = () => gsap.to(a, { color: '#94a3b8', duration: 0.3, overwrite: 'auto' });
-      a.addEventListener('pointerenter', onEnter);
-      a.addEventListener('pointerleave', onLeave);
-      cleanups.push(() => {
-        a.removeEventListener('pointerenter', onEnter);
-        a.removeEventListener('pointerleave', onLeave);
-        gsap.set(a, { clearProps: 'color' });
-      });
-    });
   }
 
-  // Smooth in-page anchors via Lenis when available
   const onClick = (e: Event) => {
     const t = e.target as HTMLElement | null;
     const a = t?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
