@@ -3,14 +3,15 @@
 export const EASE = 'power3.out';
 export const EASE_INOUT = 'power2.inOut';
 export const EASE_SOFT = 'power2.out';
+export const EASE_EXPO = 'expo.out';
 
 export const DUR = {
-  hero: 1.05,
-  reveal: 0.85,
-  stagger: 0.08,
-  nav: 0.45,
-  magnetic: 0.55,
-  hover: 0.35,
+  hero: 1.15,
+  reveal: 0.9,
+  stagger: 0.075,
+  nav: 0.5,
+  magnetic: 0.58,
+  hover: 0.38,
 } as const;
 
 export type MotionProfile = {
@@ -51,8 +52,8 @@ export function getMotionProfile(): MotionProfile {
     return {
       reduced: false,
       mobile: true,
-      strength: 0.65,
-      parallax: 0.35,
+      strength: 0.6,
+      parallax: 0.3,
       magnetic: 0,
       enableLenis: false,
       enableMagnetic: false,

@@ -29,8 +29,12 @@ export function initNav(profile: MotionProfile, lenis: Lenis | null): () => void
 
     // Soft underline / color polish on nav links
     nav.querySelectorAll<HTMLElement>('.links a').forEach((a) => {
-      const onEnter = () => gsap.to(a, { color: '#67e8f9', duration: 0.25, overwrite: 'auto' });
-      const onLeave = () => gsap.to(a, { color: '#94a3b8', duration: 0.3, overwrite: 'auto' });
+      const accent = () =>
+        getComputedStyle(document.documentElement).getPropertyValue('--cyan').trim() || '#67e8f9';
+      const muted = () =>
+        document.documentElement.getAttribute('data-theme') === 'light' ? '#5a6b80' : '#94a3b8';
+      const onEnter = () => gsap.to(a, { color: accent(), duration: 0.25, overwrite: 'auto' });
+      const onLeave = () => gsap.to(a, { color: muted(), duration: 0.3, overwrite: 'auto' });
       a.addEventListener('pointerenter', onEnter);
       a.addEventListener('pointerleave', onLeave);
       cleanups.push(() => {

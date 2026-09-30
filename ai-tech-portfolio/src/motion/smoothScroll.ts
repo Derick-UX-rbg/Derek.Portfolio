@@ -13,12 +13,13 @@ export function initSmoothScroll(profile: MotionProfile): SmoothScrollHandle {
     return { lenis: null, destroy: () => undefined };
   }
 
+  // Soft cinematic scroll — restrained, not floaty
   const lenis = new Lenis({
-    duration: 1.15,
+    duration: 1.28,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
-    touchMultiplier: 1.4,
-    wheelMultiplier: 0.95,
+    touchMultiplier: 1.25,
+    wheelMultiplier: 0.9,
     autoRaf: false,
   });
 
@@ -50,7 +51,7 @@ export function scrollToHash(lenis: Lenis | null, hash: string) {
   const target = document.getElementById(id) || document.querySelector(hash);
   if (!target) return;
   if (lenis) {
-    lenis.scrollTo(target as HTMLElement, { offset: -72, duration: 1.2 });
+    lenis.scrollTo(target as HTMLElement, { offset: -76, duration: 1.28 });
   } else {
     (target as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

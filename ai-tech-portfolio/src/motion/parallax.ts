@@ -8,7 +8,7 @@ export function initParallax(profile: MotionProfile) {
   const grid = document.querySelector<HTMLElement>('.grid');
   if (grid) {
     gsap.to(grid, {
-      yPercent: 12 * profile.parallax,
+      yPercent: 10 * profile.parallax,
       ease: 'none',
       scrollTrigger: {
         trigger: document.body,
@@ -19,11 +19,10 @@ export function initParallax(profile: MotionProfile) {
     });
   }
 
-  // Subtle float on hero strip / gradient accent feel without layout shift
   const hero = document.querySelector('.hero');
   if (hero) {
     gsap.to(hero.querySelector('.copy'), {
-      y: 40 * profile.parallax,
+      y: 48 * profile.parallax,
       ease: 'none',
       scrollTrigger: {
         trigger: hero,
@@ -31,6 +30,26 @@ export function initParallax(profile: MotionProfile) {
         end: 'bottom top',
         scrub: true,
       },
+    });
+  }
+
+  // Soft cinematic settle on showcase video while scrolling into view (desktop)
+  if (!profile.mobile) {
+    gsap.utils.toArray<HTMLElement>('.showcase-media video').forEach((vid) => {
+      gsap.fromTo(
+        vid,
+        { scale: 1.06 },
+        {
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: vid.closest('.showcase-card') || vid,
+            start: 'top bottom',
+            end: 'center center',
+            scrub: true,
+          },
+        },
+      );
     });
   }
 

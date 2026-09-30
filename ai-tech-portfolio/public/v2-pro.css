@@ -1,16 +1,152 @@
-/* V2 PRO polish layer: preserves the existing React UI while adding a stronger creative-tech feel. */
-:root{--pro-cyan:#67e8f9;--pro-green:#6ee7b7;--pro-border:rgba(148,163,184,.16)}
-body{background:#050810}
-.site{background:radial-gradient(circle at 8% 18%,rgba(103,232,249,.055),transparent 24rem),radial-gradient(circle at 92% 48%,rgba(110,231,183,.045),transparent 26rem),#050810!important}
-.nav{background:rgba(5,8,16,.86)!important;border-bottom-color:rgba(103,232,249,.12)!important}
-.brand-mark{box-shadow:0 0 30px rgba(103,232,249,.08)}
-.hero{padding-top:112px!important}
-.hero-copy{position:relative}
-.hero-copy:after{content:'AI SYSTEMS  /  AUTOMATION  /  CREATIVE TECH';display:block;margin-top:28px;color:#506074;font:600 9px 'JetBrains Mono',monospace;letter-spacing:.16em}
-.project,.skill,.contact{box-shadow:0 16px 55px rgba(0,0,0,.12)}
-.project:hover{box-shadow:0 22px 65px rgba(0,0,0,.2)!important}
-.project-link{transition:transform .2s ease,color .2s ease}.project-link:hover{transform:translateX(3px)}
-.section-label{font-weight:700!important}
-.contact{border-color:rgba(103,232,249,.18)!important}
-@media(max-width:820px){.hero{padding-top:78px!important}.hero-copy:after{line-height:1.8}}
-@media(prefers-reduced-motion:reduce){.project-link{transition:none}}
+/* V2 PRO polish — cinematic creative-studio feel on dark teal foundation.
+   Light overrides live in src/theme/theme.css. Scope dark polish to dark theme. */
+
+:root{
+  --pro-cyan:#67e8f9;
+  --pro-green:#6ee7b7;
+  --pro-border:rgba(148,163,184,.16);
+  --pro-ink:#050810;
+}
+
+/* Dark polish */
+html[data-theme="dark"] body,
+:root:not([data-theme]) body{background:var(--pro-ink)}
+
+html[data-theme="dark"] .site,
+:root:not([data-theme]) .site{
+  background:
+    radial-gradient(circle at 78% 2%,rgba(34,211,238,.12),transparent 32rem),
+    radial-gradient(circle at 8% 28%,rgba(52,211,153,.055),transparent 26rem),
+    radial-gradient(circle at 50% 70%,rgba(103,232,249,.03),transparent 40rem),
+    #050810!important;
+}
+
+html[data-theme="dark"] .nav,
+:root:not([data-theme]) .nav{
+  background:rgba(5,8,16,.88)!important;
+  border-bottom-color:rgba(103,232,249,.14)!important;
+  backdrop-filter:blur(20px) saturate(1.15)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(1.15)!important;
+}
+
+.mark{box-shadow:0 0 28px rgba(103,232,249,.1)}
+html[data-theme="light"] .mark{box-shadow:0 0 22px rgba(8,145,178,.08)}
+.brand{letter-spacing:-.02em}
+
+.hero{padding-top:118px!important;padding-bottom:96px!important}
+.hero h1{letter-spacing:-.06em!important}
+html[data-theme="dark"] .hero .grad{filter:drop-shadow(0 0 28px rgba(103,232,249,.12))}
+html[data-theme="dark"] .kicker{box-shadow:0 0 24px rgba(52,211,153,.06)}
+
+.cta,.primary{transition:transform .28s ease,background .28s ease,box-shadow .28s ease!important}
+html[data-theme="dark"] .cta:hover,
+html[data-theme="dark"] .primary:hover{box-shadow:0 14px 40px rgba(34,211,238,.2)!important}
+
+.section{padding:100px 0!important}
+.label{letter-spacing:.14em!important;font-weight:700!important}
+h2{letter-spacing:-.05em!important}
+
+.card,.labcard,.skill,.stackcard,.nowcard,.principle{
+  transition:transform .3s cubic-bezier(.2,.75,.25,1),border-color .3s ease,box-shadow .3s ease!important;
+}
+html[data-theme="dark"] .card:hover,
+html[data-theme="dark"] .labcard:hover{
+  border-color:rgba(103,232,249,.28)!important;
+  box-shadow:0 22px 60px rgba(0,0,0,.22),0 0 32px rgba(34,211,238,.05)!important;
+}
+.skill:hover,.nowcard:hover{
+  border-color:rgba(103,232,249,.22)!important;
+  transform:translateY(-3px);
+}
+html[data-theme="light"] .skill:hover,
+html[data-theme="light"] .nowcard:hover{
+  border-color:rgba(14,116,144,.28)!important;
+}
+
+.showcase-label{letter-spacing:.16em!important;margin-bottom:18px!important}
+.showcase-grid{gap:18px!important}
+.showcase-card{
+  transition:transform .35s cubic-bezier(.2,.75,.25,1),border-color .35s ease,box-shadow .35s ease!important;
+}
+html[data-theme="dark"] .showcase-card{box-shadow:0 18px 60px rgba(0,0,0,.18)!important}
+html[data-theme="dark"] .showcase-card:hover{
+  border-color:rgba(103,232,249,.32)!important;
+  box-shadow:0 28px 70px rgba(0,0,0,.28),0 0 36px rgba(34,211,238,.06)!important;
+}
+html[data-theme="dark"] .showcase-card.featured{
+  min-height:360px!important;
+  border-color:rgba(103,232,249,.16)!important;
+  background:linear-gradient(145deg,rgba(15,23,36,.96),rgba(6,10,18,.94))!important;
+}
+.showcase-card.featured{min-height:360px!important}
+.showcase-card.featured .showcase-media{min-height:360px!important}
+html[data-theme="dark"] .showcase-media{background:#03060c!important}
+.showcase-media video{transition:transform .7s cubic-bezier(.2,.75,.25,1),filter .5s ease}
+html[data-theme="dark"] .showcase-overlay{
+  background:linear-gradient(180deg,transparent 42%,rgba(3,6,12,.88))!important;
+}
+.showcase-badge{
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  transition:transform .3s ease,background .3s ease,border-color .3s ease;
+}
+html[data-theme="dark"] .showcase-card:hover .showcase-badge{
+  background:rgba(34,211,238,.16);
+  border-color:rgba(103,232,249,.45);
+}
+html[data-theme="light"] .showcase-card:hover .showcase-badge{
+  background:rgba(8,145,178,.14);
+  border-color:rgba(14,116,144,.4);
+}
+.showcase-body h3{letter-spacing:-.04em!important}
+.showcase-card.featured .showcase-body h3{font-size:26px!important}
+
+html[data-theme="dark"] .systems-strip{
+  border-color:rgba(103,232,249,.14)!important;
+  background:linear-gradient(145deg,rgba(15,23,36,.82),rgba(8,13,22,.78))!important;
+  backdrop-filter:blur(8px);
+}
+html[data-theme="dark"] .nowcard{
+  background:linear-gradient(160deg,rgba(12,18,28,.95),rgba(8,13,22,.9))!important;
+}
+html[data-theme="dark"] .contact{
+  border-color:rgba(103,232,249,.22)!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.2),inset 0 1px 0 rgba(103,232,249,.06)!important;
+  background:
+    radial-gradient(circle at 88% 8%,rgba(34,211,238,.16),transparent 22rem),
+    radial-gradient(circle at 12% 90%,rgba(110,231,183,.05),transparent 18rem),
+    #0a111c!important;
+}
+.contact h2{letter-spacing:-.05em!important}
+html[data-theme="dark"] .labcard:after{background:rgba(103,232,249,.08)!important}
+
+@media(max-width:820px){
+  .hero{padding-top:80px!important;padding-bottom:68px!important}
+  .section{padding:72px 0!important}
+  .showcase-card.featured{min-height:0!important}
+  .showcase-card.featured .showcase-media{min-height:240px!important}
+  .skill:hover,.nowcard:hover{transform:none}
+}
+@media(max-width:560px){
+  .hero{padding-top:72px!important}
+  .section{padding:64px 0!important}
+  .showcase-grid{gap:14px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .cta,.primary,.card,.labcard,.skill,.stackcard,.nowcard,.principle,.showcase-card,.showcase-media video,.showcase-badge{
+    transition:none!important;
+  }
+  .skill:hover,.nowcard:hover,.card:hover,.labcard:hover,.showcase-card:hover{transform:none!important}
+  .showcase-media video{transform:none!important}
+}
+@media(hover:none) and (pointer:coarse){
+  .showcase-card:active{
+    transform:translateY(-2px);
+  }
+  html[data-theme="dark"] .showcase-card:active{
+    border-color:rgba(103,232,249,.35)!important;
+  }
+  html[data-theme="light"] .showcase-card:active{
+    border-color:rgba(14,116,144,.35)!important;
+  }
+}
