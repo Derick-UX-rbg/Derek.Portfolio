@@ -1,0 +1,16 @@
+/* V2 PRO polish layer: preserves the existing React UI while adding a stronger creative-tech feel. */
+:root{--pro-cyan:#67e8f9;--pro-green:#6ee7b7;--pro-border:rgba(148,163,184,.16)}
+body{background:#050810}
+.site{background:radial-gradient(circle at 8% 18%,rgba(103,232,249,.055),transparent 24rem),radial-gradient(circle at 92% 48%,rgba(110,231,183,.045),transparent 26rem),#050810!important}
+.nav{background:rgba(5,8,16,.86)!important;border-bottom-color:rgba(103,232,249,.12)!important}
+.brand-mark{box-shadow:0 0 30px rgba(103,232,249,.08)}
+.hero{padding-top:112px!important}
+.hero-copy{position:relative}
+.hero-copy:after{content:'AI SYSTEMS  /  AUTOMATION  /  CREATIVE TECH';display:block;margin-top:28px;color:#506074;font:600 9px 'JetBrains Mono',monospace;letter-spacing:.16em}
+.project,.skill,.contact{box-shadow:0 16px 55px rgba(0,0,0,.12)}
+.project:hover{box-shadow:0 22px 65px rgba(0,0,0,.2)!important}
+.project-link{transition:transform .2s ease,color .2s ease}.project-link:hover{transform:translateX(3px)}
+.section-label{font-weight:700!important}
+.contact{border-color:rgba(103,232,249,.18)!important}
+@media(max-width:820px){.hero{padding-top:78px!important}.hero-copy:after{line-height:1.8}}
+@media(prefers-reduced-motion:reduce){.project-link{transition:none}}
