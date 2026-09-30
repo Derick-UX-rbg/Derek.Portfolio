@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://my-portfolio-422m.onrender.com/sitemap.xml

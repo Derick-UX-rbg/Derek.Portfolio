@@ -130,8 +130,11 @@ html.has-motion.motion-settled .hero .actions,
 html.has-motion.motion-settled .hero .stat,
 html.has-motion.motion-settled .hero .strip span,
 html.has-motion.motion-settled .hero .systems-strip,
-html.has-motion.motion-settled .showcase-media {
-  /* Unstick zero-opacity / clipped orphans if a ScrollTrigger reveal never fired */
+html.has-motion.motion-settled .showcase-media,
+html.has-motion.motion-settled .m-word,
+html.has-motion.motion-settled .is-magnetic {
+  /* Unstick zero-opacity / clipped / transformed orphans if a reveal never fired */
   opacity: 1 !important;
+  transform: none !important;
   clip-path: none !important;
 }
