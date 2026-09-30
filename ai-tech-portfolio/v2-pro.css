@@ -1,11 +1,5 @@
-/* Agency polish layer — cream/black editorial feel (Rejouice-inspired, not a clone). */
-:root{
-  --pro-cream:#efeae2;
-  --pro-muted:#8f897f;
-  --pro-border:rgba(239,234,226,.12);
-}
-body{background:#0a0a0a}
-.site{background:#0a0a0a!important}
-@media(prefers-reduced-motion:reduce){
-  .link{transition:none}
-}
+/* Editorial agency polish — black / ivory, type-led (Rejouice-inspired). */
+:root{--pro-fg:#f5f2eb;--pro-ivory:#f3eee6;--pro-border:rgba(245,242,235,.14)}
+body{background:#000}
+.site{background:#000!important}
+@media(prefers-reduced-motion:reduce){.link,.cta,.primary{transition:none}}

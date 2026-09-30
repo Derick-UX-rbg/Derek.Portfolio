@@ -4,22 +4,6 @@ html.has-smooth-scroll {
   scroll-behavior: auto;
 }
 
-html.has-cursor,
-html.has-cursor body {
-  cursor: none;
-}
-
-html.has-cursor a,
-html.has-cursor button,
-html.has-cursor .cta,
-html.has-cursor .primary,
-html.has-cursor .secondary,
-html.has-cursor .social,
-html.has-cursor .menub,
-html.has-cursor .case-toggle {
-  cursor: none;
-}
-
 .cursor {
   position: fixed;
   top: 0;
@@ -213,4 +197,9 @@ html.has-motion.motion-settled .hero .stat,
 html.has-motion.motion-settled .hero .strip span,
 html.has-motion.motion-settled .hero .systems-strip {
   opacity: 1 !important;
+}
+
+
+html.has-motion .nav.nav-light {
+  box-shadow: none;
 }

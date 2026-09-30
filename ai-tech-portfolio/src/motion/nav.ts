@@ -12,7 +12,7 @@ export function initNav(profile: MotionProfile, lenis: Lenis | null): () => void
 
   if (!profile.reduced) {
     gsap.from(nav, {
-      y: -28 * profile.strength,
+      y: -20 * profile.strength,
       opacity: 0,
       duration: DUR.nav,
       ease: EASE,
@@ -22,11 +22,23 @@ export function initNav(profile: MotionProfile, lenis: Lenis | null): () => void
     ScrollTrigger.create({
       start: 40,
       onUpdate: (self) => {
-        const scrolled = self.scroll() > 24;
-        nav.classList.toggle('nav-scrolled', scrolled);
+        nav.classList.toggle('nav-scrolled', self.scroll() > 24);
       },
     });
   }
+
+  // Sticky header adapts light/dark over alternating bands
+  const themed = gsap.utils.toArray<HTMLElement>('[data-nav-theme]');
+  themed.forEach((section) => {
+    const theme = section.dataset.navTheme || 'dark';
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top 72px',
+      end: 'bottom 72px',
+      onEnter: () => nav.classList.toggle('nav-light', theme === 'light'),
+      onEnterBack: () => nav.classList.toggle('nav-light', theme === 'light'),
+    });
+  });
 
   const onClick = (e: Event) => {
     const t = e.target as HTMLElement | null;

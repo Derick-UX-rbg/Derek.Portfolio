@@ -9,7 +9,7 @@ import { initParallax } from './parallax';
 import { initMagnetic } from './magnetic';
 import { initNav } from './nav';
 import { initHoverReveals } from './hoverReveals';
-import { initCursor } from './cursor';
+import { initCasePreview } from './casePreview';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +18,7 @@ export type MotionHandle = {
 };
 
 /**
- * Premium agency motion — Rejouice-inspired scroll, reveals, cursor, magnetic CTAs.
+ * Premium agency motion — Rejouice-inspired scroll, reveals, case hover previews, magnetic text CTAs.
  */
 export function initMotion(root?: HTMLElement | null): MotionHandle {
   const profile = getMotionProfile();
@@ -37,7 +37,7 @@ export function initMotion(root?: HTMLElement | null): MotionHandle {
   cleanups.push(initMagnetic(profile));
   cleanups.push(initHoverReveals(profile));
   cleanups.push(initNav(profile, smooth.lenis));
-  cleanups.push(initCursor(profile));
+  cleanups.push(initCasePreview(profile));
 
   const refresh = () => ScrollTrigger.refresh();
   window.addEventListener('load', refresh, { once: true });
@@ -81,7 +81,6 @@ export function initMotion(root?: HTMLElement | null): MotionHandle {
         'motion-mobile',
         'has-smooth-scroll',
         'motion-settled',
-        'has-cursor',
       );
     },
   };
